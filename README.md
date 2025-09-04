@@ -85,7 +85,7 @@ The age of the victims is **right-tailed**, meaning the distribution is **positi
 ### Finding 2
 The people of **H descents are the most victims of crimes-both violent and less violent**. Following them, are descents **W** and **B**. This finding is one of the most important findings as this will allow the police department allocate resources meaningfully. This insight will allow them to focus more on people of this descent and ensure their safety and protection.
 
-![Descent Distribution of the Victims](Assets/finding2.png)
+![Descent Distribution of the Victims](Assets/finding2(2).png)
 ***Figure 2:** The Distribution of the victims by descent.*
 
 ### Finding 3
