@@ -3,7 +3,7 @@ This project explores over five years of crime data reported by the Los Angeles 
 
 The broader aim is to demonstrate how data-driven methods can transform raw records into actionable knowledge—helping stakeholders allocate resources more effectively and opening discussions on how similar approaches could be applied in other contexts, including Bangladesh. The notebook can be found [here](/Notebook.ipynb).
 
-*This project was part of my course requirement for **Business Analytics** (course code: K301) at the **Institute of Business Administration (IBA), University of Dhaka**. This readme markdown file is an condensed version of the report, which can be found [here](/Report.pdf).*
+*This project was part of my course requirement for **Business Analytics** (course code: K301) at the **Institute of Business Administration (IBA), University of Dhaka**.*
 
 
 ## Background 
@@ -27,12 +27,12 @@ In short, I leveraged python and some of its libraries (primarily `pandas`, `mat
 
 # Data Cleaning & Pre-processing
 Like almost all datasets, this dataset too was messy at the source. It needed substantial cleaning before conducting exploratory data analysis or running models. In the second stage of the assignment (the first stage being loading the dataset), we clean all the issues of the dataset and process the data as per our need. Here are the cleaning processes conducted step-by-step (more details in the report):
-1. Dropping Irrelevant Columns
-2. Renaming the Columns
-3. Fixing the Variable Types
-4. Changing Column Variables
-5. Fixing the Missing Variables
-6. Outlier Detection & Sanity Check
+1. **Dropping Irrelevant Columns:** The dataset had a total of 28 columns. Many of these columns were data types that weren't relevant for our assignment as exploring and modelling em wis too advanced. So, we do our due diligence and drop those columns by using **`crime.drop(columns)`**. We identified **12 redundant columns** and drop them from our dataset. This brings the number of columns down to 16.
+2. **Renaming the Columns:** Almost all the columns had either incoherent alphabetical sorting or obscure naming that any outside readers will struggle to understand. So, as part of our next step, we renamed all the columns using **`crime.rename()`** into a much easier format by following snake-casing format, dropping the hyphens (`-`) or spaces for dashes (`_`) and provided clear context in the column naming so that everyone can apprehend what column signifies which. For example, “`AREA_NAME`” was converted to “`area`”, “`Part 1-2`” was converted to “`crime_class`”, and so on.
+3. **Fixing the Variable Types:** By using **`crime.info()`** we check the data types and as expected, the variable types were all wrong by default. The dates were not formatted properly, and the categorical variables were not stored in the appropriate formats. So, we first convert the date columns "date_reported" and "date_occurrence" into proper datetime format by using **`pd.to_datetime()`**. After that, we properly format the "`time_occurrence`" column to be exactly 4-digits long and add that column with "`date_occurrence`". By adding these two columns, we create a new column called "`date_occurrence`" which allowed us to drop these columns. After doing the cleaning, our memory usage dropped from 107.3 MB to 47.9 MB. 
+4. **Changing Column Variables:** As stated before, some of the ways the columns and variables were stored were difficult to comprehend if one is not sufficiently familiar with the dataset. For example, in the "`crime_class`" column, the variables "`1`" and "`2`" signify "violent crimes" and "non-violent crimes" respectively. So, we changed the variables into the later ones using **`Crime["crime_class"].replace()`** for easier understanding. Beside this, we also fixed the "`crime`", "`premise`", and "`location`" columns which were all using uppercase letters. We converted the uppercase letters to proper casing by using **`crime["column"].str.capitalize`**. We also converted some of the "`-`" in the dataset with "`Unknown`" or "`U`". Finally, we removed the whitespaces from the "location" column using **`crime["location"].str.strip()`**.
+5. **Fixing the Missing Variables:** By using **`crime.isna().sum()`** we see how many missing columns had missing variables and how many were missing. Out of 13 columns, total four columns had missing values. The column "`weapon_used`" had total 677,744 missing values which translates to around 67%. Now replacing the missing values will heavily bias the column in modelling and will also affect the exploratory data analysis as well. So, we drop this column. The next column —"`premise`"—only had 0.06% missing values. Now dropping the rows would have worked perfectly fine but so would replacing the missing values with "`Unknown`". So, we did exactly that. The same approach was used for "`victim_sex`" and "`victim_descent`" as well. Because as can be shown from the graph below and number of data missing, the columns have nearly equal number of missing values. This suggested that they're missing together (same incidence). So, to keep it the absolute safest, we replace the missing values with "`U`" for unknown instead of filling the missing values with victim sex or descent.
+6. **Detecting Outliers & Conducting Sanity Checks:** Finally, we conduct a basic sanity check to see whether all the column values were logical and determine the outliers. At first, we see the summary statistic of the only numeric variable of the dataset—"`victim_age`". We see that the minimum age recorded was -4 and the maximum age was 120. Age cannot be less than 0 and is highly unlikely to be more than 100. So, we identify the ages below or equal to 0 and above 100 using the **`(crime["victim_age"] <= 0) | (crime["victim_age"] >= 100)`** and drop these columns. We then drop all the extreme values that are below the acceptable threshold (1.5 times the IQR below the first quartile) and above the acceptable threshold (1.5 times the IQR above the third quartile). Finally, the date of reporting the crime cannot be earlier than the date of occurrence. So, we check whether any such record exists or not. As no such records were found, we conclude the data cleaning step.
 
 
 
@@ -80,60 +80,60 @@ We found a lot of things while going through the data. Some of the most crucial 
 The age of the victims is **right-tailed**, meaning the distribution is **positively-skewed**. But not by much. This analysis shows us that younger people were more prone towards victims of crimes in Los Angeles between 2020 and 2025.
 
 ![Age Distribution of the Victims](Assets/finding1.png)
-***Figure 2:** The  Distribution of the Victims by Age.*
+***Figure 1:** The  Distribution of the Victims by Age.*
 
 ### Finding 2
 The people of **H descents are the most victims of crimes-both violent and less violent**. Following them, are descents **W** and **B**. This finding is one of the most important findings as this will allow the police department allocate resources meaningfully. This insight will allow them to focus more on people of this descent and ensure their safety and protection.
 
 ![Descent Distribution of the Victims](Assets/finding2.png)
-***Figure 3:** The Distribution of the victims by descent.*
+***Figure 2:** The Distribution of the victims by descent.*
 
 ### Finding 3
 As per the data, **Males are the most victims of violent crimes** whereas **Females are the most victim of less violent crimes**. The other sexes recorded also faced crimes, but those records were not significant compared to the ones of men and women. Now this can also mean that females are not reporting the crimes happened to them. Without statistical tests, this cannot be verified. Overall, males face the most violence.
 
 ![Gender Distribution of the Victims](Assets/finding3.png)
-***Figure 4:** The Distribution of the Victims by Sex.*
+***Figure 3:** The Distribution of the Victims by Sex.*
 
 ### Finding 4
 This finding is also a very crucial one. As per the data, the most recorded less violent crime is **Battery-simple assault**. At the same time, the most recorded violent crime is **Burglary from vehicles**. This finding is crucial because it will allow responders to prepare accordingly before handling any situations. The police force can train their officers to respond appropriately to these crimes. The other most common less violent crimes are **Theft of identity**, **Intimate partner simple assault**, etc. The other common violent crimes are **Assault with deadly weapon**, **aggravated assault**, **Theft plain-petty ($950 & under)**, etc.
 
 ![Crime Distribution](Assets/finding4.png)
-***Figure 5:** The Distribution of the Victims by Crime Type.*
+***Figure 4:** The Distribution of the Victims by Crime Type.*
 
 ### Finding 5
 Another important insight-we identified the top crime-prone areas of Los Angeles. As per the data, **Central had the most reported violent crimes** whereas **77th Street had the highest less violent crimes**. This insight will allow the police departments to prepare and respond to these areas appropriately. They can prepare backups ready for crime calls from such area. Other common areas include **Pacific**, **Southwest**, **Hollywood**, etc.
 
 ![Crime Prone Areas](Assets/finding5.png)
-***Figure 6:** The Most Crime Prone Areas in Los Angeles.*
+***Figure 5:** The Most Crime Prone Areas in Los Angeles.*
 
 ### Finding 6
 Now, we take a look at the crimes' status from the LAPD's side. As can be shown from the graph below, **a huge number of crimes are still under investigation**. Compared to the number of active investigations, the number of arrests and other methods are very few. Now it is understandable that at the same time, a lot of crimes will be under investigation. But this insight will allow the police departments to streamline their investigation process by means of either higher resource allocation or other measures deemed appropriate.
 
 ![Crime Status](Assets/finding_problem.png)
-***Figure 7:** The Crime Status from LAPD's Side.*
+***Figure 6:** The Crime Status from LAPD's Side.*
 
 ### Finding 7
 Premises tell us about the contextual environment of the data— the setting in which the crime took place. From the graph we can see that, **a huge number of less violent crimes took place in single family dwelling** whereas **a high number of violent crimes took place in the streets**. Premises add critical context about the crime setting. LAPD can develop countermeasures from this insight.
 
 ![Premises Distribution](Assets/finding7.png)
-***Figure 8:** The Distribution of the Victims by Premises.*
+***Figure 7:** The Distribution of the Victims by Premises.*
 
 ### Finding 8
 Now, we get into some time-series analysis. As per the data, **the highest number of crimes occurred at 1200 hours (12:00 PM)** and **the lowest number of crimes took place at 0500 hours (05:00 AM)**. This data will help police departments re-organize their schedules and assign more patrol at the high crime-hours.
 
 ![Time Series Analysis](Assets/finding8.png)
-***Figure 9:** The Time Series Analysis of Crimes.*
+***Figure 8:** The Time Series Analysis of Crimes.*
 
 ### Finding 9
 When we analyzed the data based on the days of the weak and the months of the year, we saw that almost all the days or months had roughly the same number of crimes reported. So, no insights could be produced from here. Crime doesn't vary on the large scale when thinking of days or months. The number of crimes across hours and days can be visualised via the following heatmap:
 
 ![Heatmap of Days vs. Hours](Assets/heatmap.png)
-***Figure 10:** Heatmap of Crimes by Days and Hours.*
+***Figure 9:** Heatmap of Crimes by Days and Hours.*
 
 The number of crimes across days and months can also be visualised via the following heatmap:
 
 ![Heatmap of Months vs. Days](Assets/heatmap2.png)
-***Figure 11:** Heatmap of Crimes by Months and Days.*
+***Figure 10:** Heatmap of Crimes by Months and Days.*
 
 ### Finding 10
 Finding 10: For our last finding, we tracked the crime count over the years (2020-2025). As per the data, **the number of crimes appeared to go down**. But that is not the case. As per the data source:
@@ -143,7 +143,7 @@ Finding 10: For our last finding, we tracked the crime count over the years (202
 So. this explains the below graph that the amount of crime seems to go down.
 
 ![Crime Count Over the Years](Assets/finding10.png)
-***Figure 12:** The Crime Count Over the Years.*
+***Figure 11:** The Crime Count Over the Years.*
 
 
 
@@ -174,7 +174,7 @@ SVM finds the best decision hyperplane that maximizes its separation from the su
 A decision tree is similar to a yes/no flowchart, with data separated at each step based on feature values. It asks questions like, *Is the victim over 30?* and *Is sex = H?* until it reaches a final categorization at the leaf nodes where Gini Impurity is 0. We kept the `max_depth = 8` for computation purposes. Tree diagram shown below:
 
 ![Decision Tree Diagram](Assets/tree.png)
-***Figure 13:** Decision Tree Diagram (depth 8)*
+***Figure 12:** Decision Tree Diagram (depth 8)*
 
 ### Random Forest Classifier
 Random forest is the next step of a decision tree. It generates hundreds of distinct decision trees using random subsets of data and features, then uses a majority vote from all trees. It's like asking 1000 different experts (trees) for their thoughts and going with whatever the majority decides. The final class is determined by a majority vote among all trees, boosting stability and accuracy. We kept `max_depth = 25` and `n_estimators = 500` for computational purposes.
@@ -204,14 +204,14 @@ The findings of the above graph are visualized across accuracy, ROC AUC, F1 Scor
 As can be seen from the table and the graph, the **Random Forest Classifier** model scored excellent in all the metrics— high scores in accuracy, area under the ROC curve, precision, recall, etc. and scored lowest in RMSE (low scores mean a better model). The **Support Vector Machine** (SVM) model scored the lowest in all metrics except recall (violent). So, the best model for this problem is **Random Forest Classifier**.
 
 ![Model Performance Comparison](Assets/model_comparison.png)
-***Figure 14**: Model Performance across Four Metrics*
+***Figure 13**: Model Performance across Four Metrics*
 
 The Random Forest model (maximum depth = 25, 500 trees) demonstrates excellent performance in classifying crimes. For class 0 (less violent crimes), it achieved a **precision of 0.90** and **recall of 0.92**, indicating that most predicted class 0 cases were correct and that the model successfully identified the majority of actual class 0 instances. For class 1 (violent crimes), the model attained a **precision of 0.91** and **recall of 0.89**, showing high correctness of predicted class 1 cases while capturing a substantial portion of actual class 1 instances. Lastly, the model achieved an F1-score of 0.91 for class 0 and 0.90 or class 1, demonstrating robust overall classification performance across both crime classes. 
 
 Overall, the random forest model achieved an accuracy of 90.41%, correctly classifying nearly 9 out of 10 cases. Its **ROC AUC of 97.5%** indicates excellent ability to discriminate between the two crime classes (violent and less violent). The model's **RMSE of 0.31** reflects a relatively low prediction error, further supporting its reliability of distinguishing between violent and less violent crimes.
 
 ![Roc Curves](Assets/roc.png)
-***Figure 15**: ROC Curves of Three Models*
+***Figure 14**: ROC Curves of Three Models*
 
 
 # Conclusion
