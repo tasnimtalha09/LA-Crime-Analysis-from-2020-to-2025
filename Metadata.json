@@ -1,0 +1,50 @@
+{
+  "@type": "dcat:Dataset",
+  "accessLevel": "public",
+  "contactPoint": {
+    "@type": "vcard:Contact",
+    "fn": "LAPD OpenData",
+    "hasEmail": "mailto:no-reply@data.lacity.org"
+  },
+  "description": "***Starting on March 7th, 2024, the Los Angeles Police Department (LAPD) will adopt a new Records Management System for reporting crimes and arrests. This new system is being implemented to comply with the FBI's mandate to collect NIBRS-only data (NIBRS — FBI - https://www.fbi.gov/how-we-can-help-you/more-fbi-services-and-information/ucr/nibrs). During this transition, users will temporarily see only incidents reported in the retiring system. However, the LAPD is actively working on generating new NIBRS datasets to ensure a smoother and more efficient reporting system. ***\n\n******Update 1/18/2024 - LAPD is facing issues with posting the Crime data, but we are taking immediate action to resolve the problem. We understand the importance of providing reliable and up-to-date information and are committed to delivering it.\n\nAs we work through the issues, we have temporarily reduced our updates from weekly to bi-weekly to ensure that we provide accurate information. Our team is actively working to identify and resolve these issues promptly.\n\nWe apologize for any inconvenience this may cause and appreciate your understanding. Rest assured, we are doing everything we can to fix the problem and get back to providing weekly updates as soon as possible. ****** \n\nThis dataset reflects incidents of crime in the City of Los Angeles dating back to 2020. This data is transcribed from original crime reports that are typed on paper and therefore there may be some inaccuracies within the data. Some location fields with missing data are noted as (0°, 0°). Address fields are only provided to the nearest hundred block in order to maintain privacy. This data is as accurate as the data in the database. Please note questions or concerns in the comments.",
+  "distribution": [
+    {
+      "@type": "dcat:Distribution",
+      "downloadURL": "https://data.lacity.org/api/views/2nrs-mtv8/rows.csv?accessType=DOWNLOAD",
+      "mediaType": "text/csv"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "describedBy": "https://data.lacity.org/api/views/2nrs-mtv8/columns.rdf",
+      "describedByType": "application/rdf+xml",
+      "downloadURL": "https://data.lacity.org/api/views/2nrs-mtv8/rows.rdf?accessType=DOWNLOAD",
+      "mediaType": "application/rdf+xml"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "describedBy": "https://data.lacity.org/api/views/2nrs-mtv8/columns.json",
+      "describedByType": "application/json",
+      "downloadURL": "https://data.lacity.org/api/views/2nrs-mtv8/rows.json?accessType=DOWNLOAD",
+      "mediaType": "application/json"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "describedBy": "https://data.lacity.org/api/views/2nrs-mtv8/columns.xml",
+      "describedByType": "application/xml",
+      "downloadURL": "https://data.lacity.org/api/views/2nrs-mtv8/rows.xml?accessType=DOWNLOAD",
+      "mediaType": "application/xml"
+    }
+  ],
+  "identifier": "https://data.lacity.org/api/views/2nrs-mtv8",
+  "issued": "2020-02-10",
+  "keyword": ["police", "safe city", "crime", "crime data", "lapd", "crimes"],
+  "landingPage": "https://data.lacity.org/d/2nrs-mtv8",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/legalcode",
+  "modified": "2025-08-06",
+  "publisher": {
+    "@type": "org:Organization",
+    "name": "data.lacity.org"
+  },
+  "theme": ["Public Safety"],
+  "title": "Crime Data from 2020 to Present"
+}
