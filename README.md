@@ -165,7 +165,7 @@ From analyzing the dataset, we came across a question that can help the police d
 In this section, we take a look at the models used. The performance of the models and the best model will be discussed in the next section.
 
 ### Logistic Regression
-Logistic regression model, it predicts the likelihood of a yes or no outcome based on the input features, which in our case, is whether a crime is less violent or not. It then classifies the result based on whether the likelihood exceeds a certain threshold. For our model, we selected `solver = "newton-cholesky"` and kept the maximum iterations to 1000 to reserve computing power. 
+Logistic regression model, it predicts the likelihood of a yes or no outcome based on the input features, which in our case, is whether a crime is less violent or not. It then classifies the result based on whether the likelihood exceeds a certain threshold. For our model, we selected `solver = "newton-cholesky"` and kept the maximum iterations to 1000 to reserve computing power.
 
 ### Support Vector Machine (SVM)
 SVM finds the best decision hyperplane that maximizes its separation from the support vectors-the nearest data points from each class. It establishes the broadest "margin" or buffer zone between classes to guarantee the strongest possible separation. We also limited the maximum iterations to 2000 because without it, the model runs forever. No ROC curve could be produced because of two `AttributeErrors`. 
@@ -182,6 +182,13 @@ Random forest is the next step of a decision tree. It generates hundreds of dist
 ### Extreme Gradient Boosting (XGBoost) Classifier
 XGBoost is an ensemble learning method that builds multiple decision trees sequentially, where each new tree tries to correct the errors of the previous ones. It combines these trees’ predictions using a weighted sum to produce highly accurate classifications. For our model, we set `n_estimators = 1000`, `max_depth = 50` and `learning_rate = 0.1` to balance performance and computation, while using `eval_metric = "logloss"` to monitor training progress.
 
+### K-Nearest Neighbour (KNN) Classifier
+The K-Nearest Neighbour (KNN) classifier predicts the class of a data point based on the majority class of its closest neighbors in the feature space. It essentially “asks” nearby observations, Who are your closest friends, and what class do they belong to? to decide the classification. The number of neighbors (k) controls how many nearby points influence the decision, and distance metrics determine how closeness is calculated. For our model, we relied on the default parameters. KNN is straightforward and interpretable but can be computationally intensive for large datasets because it needs to calculate distances to all points for each prediction.
+
+### Gaussian Naive Bayes (GNB) Classifier
+The Gaussian Naive Bayes (GNB) classifier applies Bayes’ theorem under the assumption that the features are independent and normally distributed within each class. It calculates the probability of a data point belonging to each class based on its feature values, then chooses the class with the highest likelihood. This method is highly efficient and works well with high-dimensional data because it requires estimating only a few parameters per feature. For our model, we relied on the default Gaussian likelihood assumption, which allowed rapid training and prediction, making GNB particularly suitable for large datasets or situations where computation speed is critical.
+
+
 
 ## Performance Evaluation
 
@@ -189,17 +196,16 @@ XGBoost is an ensemble learning method that builds multiple decision trees seque
 The findings of the above graph are visualized across accuracy, ROC AUC, F1 Score (less violent), and RMSE in the next page as well as the ROC curves of three models (SVM required additional steps).
 
 ***Table 3:** Model Performance*
-| Metric                        | Logistic Regression | Support Vector Machine (SVM) | Decision Tree Classifier | Random Forest Classifier | Extreme Gradient Boosting (XGBoost) Classifier |
-|-------------------------------|-------------------|-----------------------------|------------------------|------------------------|-----------------------------------------------|
-| ***Accuracy***                      | 0.896             | 0.652                       | 0.893                  | 0.904                  | 0.891                                         |
-| ***ROC AUC***                       | 0.971             | 0.44                        | 0.966                  | 0.975                  | 0.968                                         |
-| ***Precision (Less Violent)***      | 0.89              | 0.47                        | 0.88                   | 0.9                    | 0.89                                          |
-| ***Precision (Violent)***           | 0.9               | 0.07                        | 0.91                   | 0.91                   | 0.89                                          |
-| ***Recall (Less Violent)***         | 0.91              | 0.9                         | 0.92                   | 0.92                   | 0.90                                          |
-| ***Recall (Violent)***              | 0.88              | 0.12                        | 0.86                   | 0.89                   | 0.88                                          |
-| ***F1 Score (Less Violent)***       | 0.9               | 0.62                        | 0.9                    | 0.91                   | 0.90                                          |
-| ***F1 Score (Violent)***            | 0.89              | 0.59                        | 0.88                   | 0.90                   | 0.89                                          |
-| RMSE                           | 0.322             | -                           | 0.328                  | 0.31                   | 0.331                                         |
+| Model Name                   | Logistic Regression | Support Vector Machine (SVM) | Decision Tree Classifier | Random Forest Classifier | Extreme Gradient Boosting (XGBoost) Classifier | K-Nearest Neighbour Classifier | Gaussian Naive Bayes |
+|-------------------------------|------------------|-----------------------------|-------------------------|-------------------------|-----------------------------------------------|-------------------------------|--------------------|
+| ***Accuracy***                      | 0.896            | 0.652                       | 0.893                   | 0.904                   | 0.891                                         | 0.888                         | 0.774              |
+| ***ROC AUC Score***      | 0.971            | -                           | 0.966                   | 0.975                   | 0.968                                         | 0.955                         | 0.950              |
+| ***Precision (Less Violent)***      | 0.890            | 0.44                        | 0.880                   | 0.900                   | 0.890                                         | 0.890                         | 0.980              |
+| ***Precision (Violent)***           | 0.900            | 0.47                        | 0.910                   | 0.910                   | 0.890                                         | 0.890                         | 0.680              |
+| ***Recall (Less Violent)***         | 0.910            | 0.07                        | 0.920                   | 0.920                   | 0.900                                         | 0.900                         | 0.580              |
+| ***Recall (Violent)***              | 0.880            | 0.9                         | 0.860                   | 0.890                   | 0.880                                         | 0.880                         | 0.980              |
+| ***F1 Score (Less Violent)***       | 0.900            | 0.12                        | 0.900                   | 0.910                   | 0.900                                         | 0.890                         | 0.730              |
+| ***F1 Score (Violent)***            | 0.890            | 0.62                        | 0.880                   | 0.900                   | 0.890                                         | 0.880                         | 0.810              |
 
 As can be seen from the table and the graph, the **Random Forest Classifier** model scored excellent in all the metrics— high scores in accuracy, area under the ROC curve, precision, recall, etc. and scored lowest in RMSE (low scores mean a better model). The **Support Vector Machine** (SVM) model scored the lowest in all metrics except recall (violent). So, the best model for this problem is **Random Forest Classifier**.
 
@@ -213,6 +219,14 @@ Overall, the random forest model achieved an accuracy of 90.41%, correctly class
 ![Roc Curves](Assets/roc.png)
 ***Figure 14**: ROC Curves of Three Models*
 
+<u>**To rank the performance of the models**</u>:
+1. Random Forest Classifier
+2. Logistic Regression
+3. Extreme Gradient Boosting (XGBoost) Classifier
+4. Decision Tree Classifier
+5. Gaussian Naive Bayes
+6. K-Nearest Neighbors (KNN)
+7. Support Vector Machine (SVM)
 
 # Conclusion
 ## Reflection on the Project 
