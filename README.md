@@ -85,7 +85,7 @@ The age of the victims is **right-tailed**, meaning the distribution is **positi
 ### Finding 2
 The people of **H descents are the most victims of crimes-both violent and less violent**. Following them, are descents **W** and **B**. This finding is one of the most important findings as this will allow the police department allocate resources meaningfully. This insight will allow them to focus more on people of this descent and ensure their safety and protection.
 
-![Descent Distribution of the Victims](Assets/finding2(2).png)
+![Descent Distribution of the Victims](Assets/finding2.png)
 ***Figure 2:** The Distribution of the victims by descent.*
 
 ### Finding 3
@@ -109,13 +109,13 @@ Another important insight-we identified the top crime-prone areas of Los Angeles
 ### Finding 6
 Now, we take a look at the crimes' status from the LAPD's side. As can be shown from the graph below, **a huge number of crimes are still under investigation**. Compared to the number of active investigations, the number of arrests and other methods are very few. Now it is understandable that at the same time, a lot of crimes will be under investigation. But this insight will allow the police departments to streamline their investigation process by means of either higher resource allocation or other measures deemed appropriate.
 
-![Crime Status](Assets/finding_problem.png)
+![Crime Status](Assets/finding7.png)
 ***Figure 6:** The Crime Status from LAPD's Side.*
 
 ### Finding 7
 Premises tell us about the contextual environment of the data— the setting in which the crime took place. From the graph we can see that, **a huge number of less violent crimes took place in single family dwelling** whereas **a high number of violent crimes took place in the streets**. Premises add critical context about the crime setting. LAPD can develop countermeasures from this insight.
 
-![Premises Distribution](Assets/finding7.png)
+![Premises Distribution](Assets/finding6.png)
 ***Figure 7:** The Distribution of the Victims by Premises.*
 
 ### Finding 8
@@ -127,7 +127,7 @@ Now, we get into some time-series analysis. As per the data, **the highest numbe
 ### Finding 9
 When we analyzed the data based on the days of the weak and the months of the year, we saw that almost all the days or months had roughly the same number of crimes reported. So, no insights could be produced from here. Crime doesn't vary on the large scale when thinking of days or months. The number of crimes across hours and days can be visualised via the following heatmap:
 
-![Heatmap of Days vs. Hours](Assets/heatmap.png)
+![Heatmap of Days vs. Hours](Assets/heatmap1.png)
 ***Figure 9:** Heatmap of Crimes by Days and Hours.*
 
 The number of crimes across days and months can also be visualised via the following heatmap:
@@ -142,7 +142,7 @@ Finding 10: For our last finding, we tracked the crime count over the years (202
 
 So. this explains the below graph that the amount of crime seems to go down.
 
-![Crime Count Over the Years](Assets/finding10.png)
+![Crime Count Over the Years](Assets/finding9.png)
 ***Figure 11:** The Crime Count Over the Years.*
 
 
@@ -200,12 +200,12 @@ The findings of the above graph are visualized across accuracy, ROC AUC, F1 Scor
 |-------------------------------|------------------|-----------------------------|-------------------------|-------------------------|-----------------------------------------------|-------------------------------|--------------------|
 | ***Accuracy***                      | 0.896            | 0.652                       | 0.893                   | 0.904                   | 0.891                                         | 0.888                         | 0.774              |
 | ***ROC AUC Score***      | 0.971            | -                           | 0.966                   | 0.975                   | 0.968                                         | 0.955                         | 0.950              |
-| ***Precision (Less Violent)***      | 0.890            | 0.44                        | 0.880                   | 0.900                   | 0.890                                         | 0.890                         | 0.980              |
-| ***Precision (Violent)***           | 0.900            | 0.47                        | 0.910                   | 0.910                   | 0.890                                         | 0.890                         | 0.680              |
-| ***Recall (Less Violent)***         | 0.910            | 0.07                        | 0.920                   | 0.920                   | 0.900                                         | 0.900                         | 0.580              |
-| ***Recall (Violent)***              | 0.880            | 0.9                         | 0.860                   | 0.890                   | 0.880                                         | 0.880                         | 0.980              |
-| ***F1 Score (Less Violent)***       | 0.900            | 0.12                        | 0.900                   | 0.910                   | 0.900                                         | 0.890                         | 0.730              |
-| ***F1 Score (Violent)***            | 0.890            | 0.62                        | 0.880                   | 0.900                   | 0.890                                         | 0.880                         | 0.810              |
+| ***Precision (Less Violent)***      | 0.890            | 0.68                        | 0.880                   | 0.900                   | 0.890                                         | 0.890                         | 0.980              |
+| ***Precision (Violent)***           | 0.900            | 0.63                       | 0.910                   | 0.910                   | 0.890                                         | 0.890                         | 0.680              |
+| ***Recall (Less Violent)***         | 0.910            | 0.63                        | 0.920                   | 0.920                   | 0.900                                         | 0.900                         | 0.580              |
+| ***Recall (Violent)***              | 0.880            | 0.67                         | 0.860                   | 0.890                   | 0.880                                         | 0.880                         | 0.980              |
+| ***F1 Score (Less Violent)***       | 0.900            | 0.66                        | 0.900                   | 0.910                   | 0.900                                         | 0.890                         | 0.730              |
+| ***F1 Score (Violent)***            | 0.890            | 0.65                        | 0.880                   | 0.900                   | 0.890                                         | 0.880                         | 0.810              |
 
 As can be seen from the table and the graph, the **Random Forest Classifier** model scored excellent in all the metrics— high scores in accuracy, area under the ROC curve, precision, recall, etc. and scored lowest in RMSE (low scores mean a better model). The **Support Vector Machine** (SVM) model scored the lowest in all metrics except recall (violent). So, the best model for this problem is **Random Forest Classifier**.
 
