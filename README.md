@@ -231,8 +231,8 @@ Overall, the random forest model achieved an accuracy of 90.41%, correctly class
 7. Support Vector Machine (SVM)
 
 # Conclusion
-## Reflection on the Project 
-The whole project was one of the most critical, thoughtful, and impactful ones. The whole process helped in teaching how to read between the lines of data, utilize Al tools as a helping method rather than fully depending on it, generate meaningful insights which can later lead to data-driven decision makings, polish messy data, generate models which can predict outcomes, conduct sanity checks, and so on. Overall, this project will benefit in the future data problems and roles significantly. 
+## Reflection on the Project
+This was a very critical, thoughtful, and impactful project. The whole process helped in teaching how to read between the lines of data, utilize Al tools as a helping method rather than fully depending on it, generate meaningful insights which can later lead to data-driven decision makings, polish messy data, generate models which can predict outcomes, conduct sanity checks, and so on. Overall, this project will benefit in the future data problems and roles significantly. 
 
 
 ## Bangladeshi Context & Benefits
