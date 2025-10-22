@@ -1,3 +1,5 @@
+<div style="text-align: justify;">
+
 # Introduction
 This project explores over five years of crime data reported by the Los Angeles Police Department (LAPD), spanning 2020 to 2025. By applying data cleaning, exploratory analysis, visualization, and machine learning techniques, the study seeks to uncover meaningful patterns in victim demographics, crime categories, geographic hotspots, and temporal trends. Beyond descriptive insights, the project also attempts to answer a key predictive question: *Can victim and crime characteristics be used to determine whether an incident is violent or non-violent?*
 
@@ -235,3 +237,5 @@ The whole project was one of the most critical, thoughtful, and impactful ones. 
 
 ## Bangladeshi Context & Benefits
 Such dataset and insights could be extremely helpful for Bangladeshi law enforcement agencies. The way the data is collected and analyzed to find patterns can teach our law enforcement to utilize data and take critical data-driven decisions. Overall, the work has critical importance in Bangladeshi context.
+
+</div>
